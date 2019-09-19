@@ -4,6 +4,9 @@
   margin: 0 auto;
 
 }
+.new{
+  text-align: center;
+}
 .app-wrapper{
   display: grid;
   grid-template-areas: "navbar content content";
