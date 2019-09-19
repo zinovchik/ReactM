@@ -6,6 +6,7 @@
 }
 .new{
   text-align: center;
+  mmargin: 0 auto;
 }
 .app-wrapper{
   display: grid;
@@ -19,7 +20,7 @@
 
 .content{
   grid-area: content;
-  
+
 }
 
 .header{
@@ -29,5 +30,5 @@
 
 .navbar{
   grid-area: navbar;
- 
+
 }
