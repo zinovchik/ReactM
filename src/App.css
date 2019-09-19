@@ -1,0 +1,30 @@
+.container{
+  max-width: 1050px;
+  width: 100%;
+  margin: 0 auto;
+
+}
+.app-wrapper{
+  display: grid;
+  grid-template-areas: "navbar content content";
+  grid-template-rows: 1fr;
+  grid-template-columns: 2fr 5fr 5fr;
+  grid-gap: 10px;
+}
+
+
+
+.content{
+  grid-area: content;
+  
+}
+
+.header{
+  grid-area: header;
+  background-color: blue;
+}
+
+.navbar{
+  grid-area: navbar;
+ 
+}

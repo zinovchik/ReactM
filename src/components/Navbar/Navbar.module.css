@@ -1,0 +1,24 @@
+.navbar ul {
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 20px 0 40px 0;
+}
+
+.navbar ul li {
+  list-style: none;
+  display: block;
+  padding: 10px 0;
+  border-top: 1px solid #f1f2f2;
+}
+.navbar ul li a {
+  color: #6d6e71;
+  font-size: 14px;
+  text-decoration: none;
+}
+.navbar ul li a:hover{
+  color: #29abe2;
+}
+
+.navbar ul li a.active{
+  color: #29abe2;
+}
