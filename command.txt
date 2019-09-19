@@ -1,0 +1,6 @@
+git status
+git add .
+git commit -m "Add new style2"
+git push origin
+git pull origin
+git clone https://github.com/zinovchik/ReactM.git
