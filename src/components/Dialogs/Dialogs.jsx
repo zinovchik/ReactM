@@ -3,21 +3,21 @@ import s from './Dialogs.module.css';
 import {NavLink} from "react-router-dom";
 
 
-const Dialogs_list_item = (props) => {
+const DialogsListItem = (props) => {
     let path = '/dialogs/' + props.user_id;
     return (
         <NavLink to={path} activeClassName={s.active} className={s.dialogs_list_item}>
-            <img src={props.user_photo} />
+            <img alt="user" src={props.user_photo} />
             <h5>{props.user_name}</h5>
         </NavLink>
     )
 }
 
-const Messages_list_item = (props)=>{
-    let clases = props.pos== 'my' ? s.messages_list_item + ' ' + s.left : s.messages_list_item + ' ' + s.right;
+const MessagesListItem = (props)=>{
+    let clases = props.pos === 'my' ? s.messages_list_item + ' ' + s.left : s.messages_list_item + ' ' + s.right;
     return (
         <div className={clases}>
-            <img src={props.user_photo} />
+            <img alt="user" src={props.user_photo} />
             <div className={s.wrap}>
                 <div className={s.name}>
                     {props.user_name}
@@ -30,17 +30,24 @@ const Messages_list_item = (props)=>{
     )
 }
 const Dialogs = (props) => {
+    let dialogsData = [
+        {user_id:"1", user_name:"Linda Lohan", user_photo:"http://mythemestore.com/friend-finder/images/users/user-2.jpg"},
+        {user_id:"2", user_name:"Julia Cox", user_photo:"http://mythemestore.com/friend-finder/images/users/user-10.jpg"}
+    ];
+
+    let messageData = [
+        {user_message:"Hello", user_name:"Linda Lohan", pos:"my", user_photo:"http://mythemestore.com/friend-finder/images/users/user-2.jpg"},
+        {user_message:"How are you?", user_name:"Linda Lohan", pos:"my", user_photo:"http://mythemestore.com/friend-finder/images/users/user-2.jpg"},
+        {user_message:"Hi", user_name:"Linda Lohan", pos:"", user_photo:"http://mythemestore.com/friend-finder/images/users/user-10.jpg"},
+        {user_message:"excelent", user_name:"Linda Lohan", pos:"", user_photo:"http://mythemestore.com/friend-finder/images/users/user-10.jpg"}
+    ];
+
     return (<div className={s.dialogs}>
         <div className={s.dialogs_list}>
-            <Dialogs_list_item user_id="1" user_name="Linda Lohan" user_photo="http://mythemestore.com/friend-finder/images/users/user-2.jpg"  />
-            <Dialogs_list_item user_id="1" user_name="Julia Cox" user_photo="http://mythemestore.com/friend-finder/images/users/user-10.jpg"  />
+            {dialogsData.map( dialog => <DialogsListItem user_id={dialog.user_id} user_name={dialog.user_name} user_photo={dialog.user_photo}  />)}
         </div>
         <div className={s.messages_list}>
-            <Messages_list_item user_message="Hello" user_name="Linda Lohan" pos="my" user_photo="http://mythemestore.com/friend-finder/images/users/user-2.jpg"  />
-            <Messages_list_item user_message="How are you?" user_name="Linda Lohan" pos="my" user_photo="http://mythemestore.com/friend-finder/images/users/user-2.jpg"  />
-            <Messages_list_item user_message="Hi" user_name="Linda Lohan" pos="" user_photo="http://mythemestore.com/friend-finder/images/users/user-10.jpg"  />
-            <Messages_list_item user_message="excelent" user_name="Linda Lohan" pos="" user_photo="http://mythemestore.com/friend-finder/images/users/user-10.jpg"  />
-            
+            {messageData.map( dialog => <MessagesListItem user_message={dialog.user_message} user_name={dialog.user_name} pos={dialog.pos} user_photo={dialog.user_photo}  />)}          
         </div>        
     </div>)
 }
