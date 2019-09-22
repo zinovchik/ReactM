@@ -30,17 +30,9 @@ const MessagesListItem = (props)=>{
     )
 }
 const Dialogs = (props) => {
-    let dialogsData = [
-        {user_id:"1", user_name:"Linda Lohan", user_photo:"http://mythemestore.com/friend-finder/images/users/user-2.jpg"},
-        {user_id:"2", user_name:"Julia Cox", user_photo:"http://mythemestore.com/friend-finder/images/users/user-10.jpg"}
-    ];
+    let dialogsData = props.dialogsData;
 
-    let messageData = [
-        {user_message:"Hello", user_name:"Linda Lohan", pos:"my", user_photo:"http://mythemestore.com/friend-finder/images/users/user-2.jpg"},
-        {user_message:"How are you?", user_name:"Linda Lohan", pos:"my", user_photo:"http://mythemestore.com/friend-finder/images/users/user-2.jpg"},
-        {user_message:"Hi", user_name:"Linda Lohan", pos:"", user_photo:"http://mythemestore.com/friend-finder/images/users/user-10.jpg"},
-        {user_message:"excelent", user_name:"Linda Lohan", pos:"", user_photo:"http://mythemestore.com/friend-finder/images/users/user-10.jpg"}
-    ];
+    let messageData = props.messageData;
 
     return (<div className={s.dialogs}>
         <div className={s.dialogs_list}>

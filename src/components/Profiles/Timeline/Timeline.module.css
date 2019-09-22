@@ -1,0 +1,40 @@
+.timeline{
+    padding: 20px 0;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.newPost{
+    margin: 20px 0 30px;
+
+}
+
+.newPost textarea{
+    background: #fff;
+    border-radius: 4px;
+    color: #939598;
+    width: 100% !important;
+    height: 50px;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+
+.newPost input{
+    display: block;
+    background: #27aae1;
+    padding: 7px 25px;
+    border: none;
+    font-size: 14px;
+    color: #fff;
+    position: relative;
+    font-weight: 600;
+    outline: none;
+    border-radius: 30px;
+    margin: 0 0 0 auto;
+}
+
+.posts{
+    padding-left: 20px;
+
+}
+
