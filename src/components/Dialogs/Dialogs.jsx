@@ -30,9 +30,8 @@ const MessagesListItem = (props)=>{
     )
 }
 const Dialogs = (props) => {
-    let dialogsData = props.dialogsData;
-
-    let messageData = props.messageData;
+    let dialogsData = props.dialogPage.dialogsData;
+    let messageData = props.dialogPage.messageData;
 
     return (<div className={s.dialogs}>
         <div className={s.dialogs_list}>

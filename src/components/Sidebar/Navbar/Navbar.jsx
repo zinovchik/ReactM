@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 
 
 
-const Nav = () => {
+const Navbar = () => {
     return (<nav className={s.navbar}>
               <ul>
                 <li><NavLink to="/profile" activeClassName={s.active}><span>&#9731;</span> Profile</NavLink></li>
@@ -16,4 +16,4 @@ const Nav = () => {
             </nav>)
 }
 
-export default Nav;
+export default Navbar;

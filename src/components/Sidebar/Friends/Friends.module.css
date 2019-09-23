@@ -1,0 +1,28 @@
+.friends h3{
+  color: #27aae1;
+  font-size: 14px;
+  text-align: center;
+}
+
+.friend{
+  position: relative;
+  float: left;
+  width: 57px;
+  height: 60px;
+}
+.friend:before{
+  content: "";
+  position: absolute;
+  left: 22px;
+  bottom: 5px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #1b9e43;
+  border: 2px solid #fff;
+}
+.friend img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
