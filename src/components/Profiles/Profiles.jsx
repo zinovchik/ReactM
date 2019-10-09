@@ -5,6 +5,8 @@ import Timeline from './Timeline/Timeline';
 const Profiles = (props) => {
     let userInfo = props.profilePage.userInfo;
     let userPosts = props.profilePage.userPosts;
+    let newPostText = props.profilePage.newPostText;
+
     return (
     <div className={s.profile}>
         <div className={s.header}>
@@ -15,7 +17,7 @@ const Profiles = (props) => {
         <div className={s.info}>
             <div className={s.name}>{userInfo.name}</div>
         </div>
-        <Timeline userInfo={userInfo} userPosts={userPosts} />
+        <Timeline userInfo={userInfo} userPosts={userPosts} newPostText={newPostText} dispatch={props.dispatch} />
 
     </div>)
 }

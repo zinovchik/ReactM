@@ -23,7 +23,8 @@ let store = {
                 'like': '5',
                 'dislike': '2'
                 },
-            ]
+            ],
+            newPostText : ""
         },
         dialogPage: {
             userInfo : {
@@ -66,20 +67,30 @@ let store = {
             ]
         },
     },
-    _callSubscriber(){
-        console.log('State chenged');
-    },
     getState(){
         return this._state;
+    },
+    _addPost(){
+        let newPost = {'text': this._state.profilePage.newPostText,
+                        'like': '2',
+                        'dislike': '1'
+                      };
+        this._state.profilePage.userPosts.push(newPost);
+        this._state.profilePage.newPostText = "";
+        this._callSubscriber(this.getState());
+    },
+    _callSubscriber(){
+        console.log('No subscribers (Observers)');
     },
     subscribe(observer){
         this._callSubscriber = observer;
     },
     dispatch(action){
         if(action.type === ADD_POST){
-
+            this._addPost(); 
         } else if(action.type === UPDATE_NEW_POST_TEXT) {
-
+            this._state.profilePage.newPostText = action.newText;
+            this._callSubscriber(this.getState());
         } else {
             //22.55
         }
@@ -87,4 +98,17 @@ let store = {
     
 
 };
-export default state;
+export default store;
+
+export const addPostActionCreator = () => {
+    return {
+        type: ADD_POST
+    }
+}
+
+export const updateNewPostTextActionCreator = (newText) => {
+    return {
+        type: UPDATE_NEW_POST_TEXT,
+        newText: newText
+    }
+}
