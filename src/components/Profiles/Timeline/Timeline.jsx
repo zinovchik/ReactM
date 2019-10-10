@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './Timeline.module.css';
 import Post from './Post/Post';
-import { addPostActionCreator, updateNewPostTextActionCreator } from '../../../Redux/state';
+import { addPostActionCreator, updateNewPostTextActionCreator } from '../../../Redux/profileReducer';
 
 const Timeline = (props) => {
 

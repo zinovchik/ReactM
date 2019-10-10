@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './Dialogs.module.css';
 import {NavLink} from "react-router-dom";
-import { addMessageActionCreator, updateNewMessageTextActionCreator } from '../../Redux/state';
+import { addMessageActionCreator, updateNewMessageTextActionCreator } from '../../Redux/dialogsReducer';
 
 
 const DialogsListItem = (props) => {
@@ -32,9 +32,9 @@ const MessagesListItem = (props)=>{
 }
 
 const Dialogs = (props) => {
-    let dialogsData = props.dialogPage.dialogsData;
-    let messageData = props.dialogPage.messageData;
-    let newMessageText = props.dialogPage.newMessageText;
+    let dialogsData = props.dialogsPage.dialogsData;
+    let messageData = props.dialogsPage.messageData;
+    let newMessageText = props.dialogsPage.newMessageText;
 
     let newMessageTextArea = React.createRef();
 

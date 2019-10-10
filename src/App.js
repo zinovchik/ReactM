@@ -11,7 +11,7 @@ import Dialogs from './components/Dialogs/Dialogs';
 
 function App(props) {
   let profilePage = props.state.profilePage;
-  let dialogPage = props.state.dialogPage;
+  let dialogsPage = props.state.dialogsPage;
   let sidebar = props.state.sidebar;
 
   return (
@@ -22,7 +22,7 @@ function App(props) {
         <Sidebar sidebar={sidebar}/>
         <div className="content">
           <Route path="/profile" render={ () => <Profiles profilePage={profilePage} dispatch={props.dispatch} /> } />
-          <Route path="/dialogs" render={ () => <Dialogs dialogPage={dialogPage} dispatch={props.dispatch} />} />                 
+          <Route path="/dialogs" render={ () => <Dialogs dialogsPage={dialogsPage} dispatch={props.dispatch} />} />                 
         </div>       
       </div>
     </div>

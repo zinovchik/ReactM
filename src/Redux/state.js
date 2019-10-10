@@ -1,9 +1,6 @@
-let ADD_POST = 'ADD_POST';
-let UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
-
-let ADD_MESSAGE = 'ADD_MESSAGE';
-let UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT';
-
+import profileReducer from "./profileReducer";
+import dialogsReducer from "./dialogsReducer";
+import sidebarReducer from "./sidebarReducer";
 
 let store = {
     _state: {
@@ -29,7 +26,7 @@ let store = {
             ],
             newPostText : ""
         },
-        dialogPage: {
+        dialogsPage: {
             userInfo : {
                 'name':   'Sarah Cruiz',
                 'photo':  'http://mythemestore.com/friend-finder/images/users/user-1.jpg',
@@ -74,32 +71,6 @@ let store = {
     getState(){
         return this._state;
     },
-    _addPost(){
-        let newPost = {'text': this._state.profilePage.newPostText,
-                        'like': '2',
-                        'dislike': '1'
-                      };
-        this._state.profilePage.userPosts.push(newPost);
-        this._state.profilePage.newPostText = "";
-        this._callSubscriber(this.getState());
-    },
-    _updateNewPostText(newText){
-        this._state.profilePage.newPostText = newText;
-        this._callSubscriber(this.getState());
-    },
-
-    _addMessage(){
-        let newMessage = {user_message: this._state.dialogPage.newMessageText, user_name:"Linda Lohan", pos:"my", user_photo:"http://mythemestore.com/friend-finder/images/users/user-2.jpg"};
-        this._state.dialogPage.messageData.push(newMessage);
-        this._state.dialogPage.newMessageText = "";
-        this._callSubscriber(this.getState());
-    },
-    _updateNewMessageText(newText){
-        this._state.dialogPage.newMessageText = newText;
-        this._callSubscriber(this.getState());
-    },
-
-
     _callSubscriber(){
         console.log('No subscribers (Observers)');
     },
@@ -107,45 +78,10 @@ let store = {
         this._callSubscriber = observer;
     },
     dispatch(action){
-        if(action.type === ADD_POST){
-            this._addPost(); 
-        } else if(action.type === UPDATE_NEW_POST_TEXT) {
-            this._updateNewPostText(action.newText);
-        } else if(action.type === ADD_MESSAGE){
-            this._addMessage(); 
-        } else if(action.type === UPDATE_NEW_MESSAGE_TEXT) {
-            this._updateNewMessageText(action.newText);
-        } else {
-            //22.55
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        this._state.sidebarPage = sidebarReducer(this._state.sidebarPage, action);
+        this._callSubscriber(this.getState());
     }
-    
-
 };
 export default store;
-
-export const addPostActionCreator = () => {
-    return {
-        type: ADD_POST
-    }
-}
-
-export const updateNewPostTextActionCreator = (newText) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: newText
-    }
-}
-
-export const addMessageActionCreator = () => {
-    return {
-        type: ADD_MESSAGE
-    }
-}
-
-export const updateNewMessageTextActionCreator = (newText) => {
-    return {
-        type: UPDATE_NEW_MESSAGE_TEXT,
-        newText: newText
-    }
-}
