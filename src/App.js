@@ -22,7 +22,7 @@ function App(props) {
         <Sidebar sidebar={sidebar}/>
         <div className="content">
           <Route path="/profile" render={ () => <Profiles profilePage={profilePage} dispatch={props.dispatch} /> } />
-          <Route path="/dialogs" render={ () => <Dialogs dialogPage={dialogPage} />} />                 
+          <Route path="/dialogs" render={ () => <Dialogs dialogPage={dialogPage} dispatch={props.dispatch} />} />                 
         </div>       
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './Dialogs.module.css';
 import {NavLink} from "react-router-dom";
+import { addMessageActionCreator, updateNewMessageTextActionCreator } from '../../Redux/state';
 
 
 const DialogsListItem = (props) => {
@@ -29,17 +30,36 @@ const MessagesListItem = (props)=>{
         </div>
     )
 }
+
 const Dialogs = (props) => {
     let dialogsData = props.dialogPage.dialogsData;
     let messageData = props.dialogPage.messageData;
+    let newMessageText = props.dialogPage.newMessageText;
 
-    return (<div className={s.dialogs}>
+    let newMessageTextArea = React.createRef();
+
+    let onMessageChange = () =>{
+        let newText = newMessageTextArea.current.value;
+        props.dispatch(updateNewMessageTextActionCreator(newText));
+    }
+
+    let addMessageAction = () => {
+        props.dispatch(addMessageActionCreator());
+    }
+
+    return (
+    <div className={s.dialogs}>
         <div className={s.dialogs_list}>
             {dialogsData.map( dialog => <DialogsListItem user_id={dialog.user_id} user_name={dialog.user_name} user_photo={dialog.user_photo}  />)}
         </div>
         <div className={s.messages_list}>
             {messageData.map( dialog => <MessagesListItem user_message={dialog.user_message} user_name={dialog.user_name} pos={dialog.pos} user_photo={dialog.user_photo}  />)}          
-        </div>        
+            <div className={s.newMessage}>
+                <textarea value={newMessageText} onChange={onMessageChange} ref={newMessageTextArea}></textarea>
+                <input type="button" value="Post" onClick={addMessageAction} />
+            </div>  
+        </div>  
+            
     </div>)
 }
 

@@ -1,6 +1,9 @@
 let ADD_POST = 'ADD_POST';
 let UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
 
+let ADD_MESSAGE = 'ADD_MESSAGE';
+let UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT';
+
 
 let store = {
     _state: {
@@ -40,7 +43,8 @@ let store = {
                 {user_message:"How are you?", user_name:"Linda Lohan", pos:"my", user_photo:"http://mythemestore.com/friend-finder/images/users/user-2.jpg"},
                 {user_message:"Hi", user_name:"Linda Lohan", pos:"", user_photo:"http://mythemestore.com/friend-finder/images/users/user-10.jpg"},
                 {user_message:"excelent", user_name:"Linda Lohan", pos:"", user_photo:"http://mythemestore.com/friend-finder/images/users/user-10.jpg"}
-            ]
+            ],
+            newMessageText : ""
         },
         sidebar: {
             friends: [
@@ -79,6 +83,23 @@ let store = {
         this._state.profilePage.newPostText = "";
         this._callSubscriber(this.getState());
     },
+    _updateNewPostText(newText){
+        this._state.profilePage.newPostText = newText;
+        this._callSubscriber(this.getState());
+    },
+
+    _addMessage(){
+        let newMessage = {user_message: this._state.dialogPage.newMessageText, user_name:"Linda Lohan", pos:"my", user_photo:"http://mythemestore.com/friend-finder/images/users/user-2.jpg"};
+        this._state.dialogPage.messageData.push(newMessage);
+        this._state.dialogPage.newMessageText = "";
+        this._callSubscriber(this.getState());
+    },
+    _updateNewMessageText(newText){
+        this._state.dialogPage.newMessageText = newText;
+        this._callSubscriber(this.getState());
+    },
+
+
     _callSubscriber(){
         console.log('No subscribers (Observers)');
     },
@@ -89,8 +110,11 @@ let store = {
         if(action.type === ADD_POST){
             this._addPost(); 
         } else if(action.type === UPDATE_NEW_POST_TEXT) {
-            this._state.profilePage.newPostText = action.newText;
-            this._callSubscriber(this.getState());
+            this._updateNewPostText(action.newText);
+        } else if(action.type === ADD_MESSAGE){
+            this._addMessage(); 
+        } else if(action.type === UPDATE_NEW_MESSAGE_TEXT) {
+            this._updateNewMessageText(action.newText);
         } else {
             //22.55
         }
@@ -109,6 +133,19 @@ export const addPostActionCreator = () => {
 export const updateNewPostTextActionCreator = (newText) => {
     return {
         type: UPDATE_NEW_POST_TEXT,
+        newText: newText
+    }
+}
+
+export const addMessageActionCreator = () => {
+    return {
+        type: ADD_MESSAGE
+    }
+}
+
+export const updateNewMessageTextActionCreator = (newText) => {
+    return {
+        type: UPDATE_NEW_MESSAGE_TEXT,
         newText: newText
     }
 }
