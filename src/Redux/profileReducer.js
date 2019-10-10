@@ -1,7 +1,28 @@
 let ADD_POST = 'ADD_POST';
 let UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
 
-let initialState = {};
+let initialState = {
+    userInfo : {
+        'name':   'Sarah Cruiz',
+        'picture':'http://mythemestore.com/friend-finder/images/covers/1.jpg',
+        'photo':  'http://mythemestore.com/friend-finder/images/users/user-1.jpg',
+    },
+    userPosts : [
+        {'text': ' If you want your app to work offline and load faster, you can change unregister() to register() below.',
+        'like': '12',
+        'dislike': '2'
+        },
+        {'text': 'Learn more about service workers: https://bit.ly/CRA-PWA',
+        'like': '15',
+        'dislike': '0'
+        },
+        {'text': 'Note that the development build is not optimize. To create a production build, use npm run build.',
+        'like': '5',
+        'dislike': '2'
+        },
+    ],
+    newPostText : ""
+};
 
 const profileReducer = (state = initialState, action) => {
     switch (action.type){
