@@ -3,9 +3,6 @@ import s from './Sidebar.module.css';
 import Navbar from './Navbar/Navbar';
 import Friends from './Friends/Friends';
 
-
-
-
 const Sidebar = (props) => {
   let friends = props.sidebar.friends;
     return (<aside className={s.sidebar}>

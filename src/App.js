@@ -2,27 +2,21 @@ import React from 'react';
 import {BrowserRouter, Route} from "react-router-dom";
 import './App.css';
 import Header from './components/Header/Header';
-import Sidebar from './components/Sidebar/Sidebar';
+import SidebarContainer from './components/Sidebar/SidebarContainer';
 import Profiles from './components/Profiles/Profiles';
-import Dialogs from './components/Dialogs/Dialogs';
-
-
-
+import DialogsContainer from './components/Dialogs/DialogsContainer';
 
 function App(props) {
-  let profilePage = props.state.profilePage;
-  let dialogsPage = props.state.dialogsPage;
-  let sidebar = props.state.sidebar;
-
+  
   return (
     <BrowserRouter>
     <Header />
     <div className="container">
       <div className="app-wrapper">          
-        <Sidebar sidebar={sidebar}/>
+        <SidebarContainer store={props.store} />
         <div className="content">
-          <Route path="/profile" render={ () => <Profiles profilePage={profilePage} dispatch={props.dispatch} /> } />
-          <Route path="/dialogs" render={ () => <Dialogs dialogsPage={dialogsPage} dispatch={props.dispatch} />} />                 
+          <Route path="/profile" render={ () => <Profiles store={props.store} /> } />
+          <Route path="/dialogs" render={ () => <DialogsContainer store={props.store} />} />                 
         </div>       
       </div>
     </div>
