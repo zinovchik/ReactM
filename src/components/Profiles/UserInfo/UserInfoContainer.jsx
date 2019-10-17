@@ -1,11 +1,18 @@
 import React from 'react';
 import UserInfo from './UserInfo';
+import StoreContext from '../../../StoreContext';
 
-const UserInfoContainer = (props) => {
-    let store = props.store.getState();
-    let userInfo = store.profilePage.userInfo;
+const UserInfoContainer = () => {
     
-    return (<UserInfo userInfo={userInfo} />)
+    return (<StoreContext.Consumer>
+                {
+                    (store) => {
+                        let state = store.getState();
+                        let userInfo = state.profilePage.userInfo;
+                        return <UserInfo userInfo={userInfo} />
+                    }
+                }
+            </StoreContext.Consumer>)
 }
 
 export default UserInfoContainer;
