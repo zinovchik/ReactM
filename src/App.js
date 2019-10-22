@@ -5,6 +5,7 @@ import Header from './components/Header/Header';
 import SidebarContainer from './components/Sidebar/SidebarContainer';
 import Profiles from './components/Profiles/Profiles';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
+import UsersContainer from './components/Users/UsersContainer';
 
 
 function App() {
@@ -17,7 +18,8 @@ function App() {
           <SidebarContainer />
           <div className="content">
             <Route path="/profile" render={ () => <Profiles /> } />
-            <Route path="/dialogs" render={ () => <DialogsContainer />} />                 
+            <Route path="/dialogs" render={ () => <DialogsContainer />} />
+            <Route path="/users" render={ () => <UsersContainer />} />                 
           </div>       
         </div>
       </div>
