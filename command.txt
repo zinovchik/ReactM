@@ -8,3 +8,7 @@ git clone https://github.com/zinovchik/ReactM.git
 
 
 npm install redux --save
+
+copy folder api to folder build
+edit api/1.0/class/configSpace.php
+edit api/1.0/ajaxHeader.php

@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import UserInfo from './UserInfo';
 import {connect} from 'react-redux';
 

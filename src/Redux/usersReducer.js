@@ -1,47 +1,13 @@
-
 let FOLLOW = 'FOLLOW';
 let UNFOLLOW = 'UNFOLLOW';
 let SET_USERS = 'SET_USERS';
+let SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 
 let initialState = {
-    users: [
-        {
-            id: 1, 
-            name: 'Emma Johnson', 
-            profesion: 'Model at Fashion', 
-            location: {city: 'CA', country: 'USA'}, 
-            photo: 'http://mythemestore.com/friend-finder/images/users/user-16.jpg',
-            follow: false
-        }, {
-            id: 2, 
-            name: 'Nora Wilson', 
-            profesion: 'Writer at Newspaper', 
-            location: {city: 'NY', country: 'USA'}, 
-            photo: 'http://mythemestore.com/friend-finder/images/users/user-17.jpg',
-            follow: false
-        }, {
-            id: 3, 
-            name: 'Diana Amber', 
-            profesion: 'Student', 
-            location: {city: 'LA', country: 'USA'}, 
-            photo: 'http://mythemestore.com/friend-finder/images/users/user-18.jpg',
-            follow: false
-        }, {
-            id: 4, 
-            name: 'Jonathon Thompson', 
-            profesion: 'Fashion Designer', 
-            location: {city: 'CA', country: 'USA'}, 
-            photo: 'http://mythemestore.com/friend-finder/images/users/user-19.jpg',
-            follow: false
-        }, {
-            id: 5, 
-            name: 'Olivia Steward', 
-            profesion: 'Creative Director', 
-            location: {city: 'NY', country: 'USA'}, 
-            photo: 'http://mythemestore.com/friend-finder/images/users/user-14.jpg',
-            follow: false
-        },
-    ],
+    users: [],
+    limitItems: 2,
+    pageCount: 1,
+    pageCurrent: 0,
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -76,9 +42,17 @@ const usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: [
-                    ...state.users,
                     ...action.users
-                ]
+                ],
+                limitItems: action.limit,
+                pageCount: Math.ceil(action.count / action.limit),
+                pageCurrent: action.page,
+            };
+
+        case SET_CURRENT_PAGE: 
+            return {
+                ...state,
+                pageCurrent: action.pageCurrent,
             };
 
         default: return state;
@@ -99,10 +73,22 @@ export const unfollowActionCreator = (userId) => {
     }
 };
 
-export const setUsersActionCreator = (users) => {
-    return {
+export const setUsersActionCreator = (users, limit, count, page) => {
+    
+    return { 
         type: SET_USERS,
         users: users,
+        limit: limit,
+        count: count,
+        page: page,
+    }
+};
+
+
+export const setCurrentPageActionCreator = (pageCurrent) => {
+    return {
+        type: SET_CURRENT_PAGE,
+        pageCurrent: pageCurrent,
     }
 };
 

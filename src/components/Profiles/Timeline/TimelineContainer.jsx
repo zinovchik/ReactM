@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import Timeline from './Timeline';
 import { addPostActionCreator, updateNewPostTextActionCreator } from '../../../Redux/profileReducer';
 import {connect} from 'react-redux';

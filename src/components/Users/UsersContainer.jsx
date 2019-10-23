@@ -1,15 +1,20 @@
-import React from 'react';
+// import React from 'react';
 import Users from './Users';
 import { connect } from 'react-redux';
-import { followActionCreator, unfollowActionCreator, setUsersActionCreator } from '../../Redux/usersReducer';
+import { followActionCreator, unfollowActionCreator, setUsersActionCreator, setCurrentPageActionCreator} from '../../Redux/usersReducer';
+
 
 let mapStateToProps = (state) =>{
     return {
         users: state.usersPage.users,
+        limitItems: state.usersPage.limitItems,
+        pageCount: state.usersPage.pageCount,
+        pageCurrent: state.usersPage.pageCurrent,
     }
 }; 
 
 let mapDispatchToProps = (dispatch) =>{
+    
     let initUsers = [
         {
             id: 6, 
@@ -34,8 +39,11 @@ let mapDispatchToProps = (dispatch) =>{
         unfollow: (userId) => {
             dispatch(unfollowActionCreator(userId));
         },
-        setUsers: (users = initUsers) => {
-            dispatch(setUsersActionCreator(users));
+        setUsers: (users = initUsers, limit = 3, count = 0, page = 0) => {
+            dispatch(setUsersActionCreator(users, limit, count, page));
+        },
+        setCurrentPage: (pageCurrent) => { 
+            dispatch(setCurrentPageActionCreator(pageCurrent));
         },
     }
 }; 
