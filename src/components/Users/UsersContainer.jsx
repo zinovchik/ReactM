@@ -1,8 +1,34 @@
-// import React from 'react';
+import React from 'react';
+import * as axios from 'axios';
 import Users from './Users';
 import { connect } from 'react-redux';
 import { followActionCreator, unfollowActionCreator, setUsersActionCreator, setCurrentPageActionCreator} from '../../Redux/usersReducer';
 
+
+class UsersApiComponent extends React.Component {
+    componentDidMount(){
+        axios.get(`http://reactm.max/api/1.0/users.php?userid=7&page=${this.props.pageCurrent}&limit=${this.props.limitItems}`).then((response)=>{
+            this.props.setUsers(response.data.items, response.data.limit, response.data.count, response.data.page); 
+        });
+    };
+
+    onPageChange = (p) =>{
+        this.props.setCurrentPage(p);
+        axios.get(`http://reactm.max/api/1.0/users.php?userid=7&page=${p}&limit=${this.props.limitItems}`).then((response)=>{
+            this.props.setUsers(response.data.items, response.data.limit, response.data.count, response.data.page); 
+        });
+    }
+
+    render() {
+        return (<Users 
+            users={this.props.users} 
+            pageCount={this.props.pageCount} 
+            pageCurrent={this.props.pageCurrent} 
+            onPageChange={this.onPageChange}
+            unfollow={this.props.unfollow}
+            follow={this.props.follow}  />);
+    }
+}
 
 let mapStateToProps = (state) =>{
     return {
@@ -48,6 +74,6 @@ let mapDispatchToProps = (dispatch) =>{
     }
 }; 
 
-const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users);
+const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersApiComponent);
 
 export default UsersContainer;
