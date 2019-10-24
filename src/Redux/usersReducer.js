@@ -67,21 +67,21 @@ const usersReducer = (state = initialState, action) => {
     }
 };
 
-export const followActionCreator = (userId) => {
+export const follow = (userId) => {
     return {
         type: FOLLOW,
         userId: userId,
     }
 };
 
-export const unfollowActionCreator = (userId) => {
+export const unfollow = (userId) => {
     return {
         type: UNFOLLOW,
         userId: userId,
     }
 };
 
-export const setUsersActionCreator = (users, limit, count, page) => {
+export const setUsers = (users, limit, count, page) => {
     
     return { 
         type: SET_USERS,
@@ -93,14 +93,14 @@ export const setUsersActionCreator = (users, limit, count, page) => {
 };
 
 
-export const setCurrentPageActionCreator = (pageCurrent) => {
+export const setCurrentPage = (pageCurrent) => {
     return {
         type: SET_CURRENT_PAGE,
         pageCurrent: pageCurrent,
     }
 };
 
-export const toggleIsFetchingActionCreator = (isFetching) => {
+export const toggleIsFetching = (isFetching) => {
     return {
         type: TOGLLE_IS_FETCHING,
         isFetching: isFetching,

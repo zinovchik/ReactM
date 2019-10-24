@@ -41,9 +41,9 @@ let Users = (props) => {
         <div className={s.pagination}>
             {pagination()}
         </div>
-        <div className="contentCenter">
+        {/* <div className="contentCenter">
             <button className={s.btn} onClick={()=>{this.props.setUsers()}}>Show More</button>
-        </div>
+        </div> */}
         
     </div>);
 }

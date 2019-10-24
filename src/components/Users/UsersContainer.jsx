@@ -2,7 +2,7 @@ import React from 'react';
 import * as axios from 'axios';
 import Users from './Users';
 import { connect } from 'react-redux';
-import { followActionCreator, unfollowActionCreator, setUsersActionCreator, setCurrentPageActionCreator, toggleIsFetchingActionCreator} from '../../Redux/usersReducer';
+import { follow, unfollow, setUsers, setCurrentPage, toggleIsFetching} from '../../Redux/usersReducer';
 
 
 class UsersApiComponent extends React.Component {
@@ -44,7 +44,7 @@ let mapStateToProps = (state) =>{
         isFetching: state.usersPage.isFetching,
     }
 }; 
-
+/*
 let mapDispatchToProps = (dispatch) =>{
     
     let initUsers = [
@@ -82,7 +82,9 @@ let mapDispatchToProps = (dispatch) =>{
         },
     }
 }; 
+*/
 
-const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersApiComponent);
+
+const UsersContainer = connect(mapStateToProps, { follow, unfollow, setUsers, setCurrentPage, toggleIsFetching } )(UsersApiComponent);
 
 export default UsersContainer;
