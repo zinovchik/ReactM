@@ -1,5 +1,6 @@
 import React from 'react';
 import s from './Users.module.css';
+import Preloader from '../Helpers/Preloader/Preloader';
 
 
 let Users = (props) => {
@@ -17,7 +18,7 @@ let Users = (props) => {
     
     return (<div>
         <h2>Users Page</h2>
-        
+        { props.isFetching ? <Preloader /> : null }
         {props.users.map(
             (user, index) => {
                 return <div key={index} className={s.user}>

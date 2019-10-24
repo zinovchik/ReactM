@@ -2,20 +2,24 @@ import React from 'react';
 import * as axios from 'axios';
 import Users from './Users';
 import { connect } from 'react-redux';
-import { followActionCreator, unfollowActionCreator, setUsersActionCreator, setCurrentPageActionCreator} from '../../Redux/usersReducer';
+import { followActionCreator, unfollowActionCreator, setUsersActionCreator, setCurrentPageActionCreator, toggleIsFetchingActionCreator} from '../../Redux/usersReducer';
 
 
 class UsersApiComponent extends React.Component {
     componentDidMount(){
+        this.props.toggleIsFetching(true);
         axios.get(`http://reactm.max/api/1.0/users.php?userid=7&page=${this.props.pageCurrent}&limit=${this.props.limitItems}`).then((response)=>{
             this.props.setUsers(response.data.items, response.data.limit, response.data.count, response.data.page); 
+            this.props.toggleIsFetching(false);
         });
     };
 
     onPageChange = (p) =>{
+        this.props.toggleIsFetching(true);
         this.props.setCurrentPage(p);
         axios.get(`http://reactm.max/api/1.0/users.php?userid=7&page=${p}&limit=${this.props.limitItems}`).then((response)=>{
             this.props.setUsers(response.data.items, response.data.limit, response.data.count, response.data.page); 
+            this.props.toggleIsFetching(false);
         });
     }
 
@@ -26,7 +30,8 @@ class UsersApiComponent extends React.Component {
             pageCurrent={this.props.pageCurrent} 
             onPageChange={this.onPageChange}
             unfollow={this.props.unfollow}
-            follow={this.props.follow}  />);
+            follow={this.props.follow}
+            isFetching={this.props.isFetching}  />);
     }
 }
 
@@ -36,6 +41,7 @@ let mapStateToProps = (state) =>{
         limitItems: state.usersPage.limitItems,
         pageCount: state.usersPage.pageCount,
         pageCurrent: state.usersPage.pageCurrent,
+        isFetching: state.usersPage.isFetching,
     }
 }; 
 
@@ -70,6 +76,9 @@ let mapDispatchToProps = (dispatch) =>{
         },
         setCurrentPage: (pageCurrent) => { 
             dispatch(setCurrentPageActionCreator(pageCurrent));
+        },
+        toggleIsFetching: (isFetching) => { 
+            dispatch(toggleIsFetchingActionCreator(isFetching));
         },
     }
 }; 
