@@ -1,13 +1,13 @@
 import React from 'react';
 import s from './Profiles.module.css';
 import TimelineContainer from './Timeline/TimelineContainer';
-import UserInfoContainer from './UserInfo/UserInfoContainer';
+import UserInfo from './UserInfo/UserInfo';
 
-const Profiles = () => {
+const Profiles = (props) => {
 
     return (
     <div className={s.profile}>
-        <UserInfoContainer />
+        <UserInfo userInfo={props.userInfo} />
         <TimelineContainer />
     </div>)
 }

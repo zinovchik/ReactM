@@ -117,6 +117,41 @@ namespace userSpace {
       return $answer;
     }
 
+
+    
+    //Получаем info юзерa
+    function getUserInfo($userId) {
+      //DEFAULT
+      $answer = array(
+        'userInfo' => array(),
+        'errors'=> false,
+      );
+      $this->dbConect = mysqli_connect($this->dbHost, $this->dbUser, $this->dbPswd, $this->dbDatabase) or die("Не могу соединиться с MySQL.");
+      //CURRENT USER INFO
+      $curentUser = mysqli_query($this->dbConect, "SELECT * FROM `users` WHERE `id` = '" . $userId . "'");
+      if($curentUser === FALSE) { 
+        $answer['errors'] = true; 
+      } else { 
+        $row = mysqli_fetch_array($curentUser, MYSQLI_ASSOC);
+        $answer['userInfo'] = array('id' => $row['id'],
+                             'name' => $row['name'],
+                             'profesion' => $row['profesion'],
+                             'location' => [
+                              'city' => $row['city'],
+                              'country' => $row['country'],
+                             ],
+                             'photo' => $row['photo'],
+                             'followed_users' => $row['follow'],
+        );
+      }
+      
+     
+
+
+      mysqli_close($this->dbConect);
+      return $answer;
+    }
+
     //функция для входа в апку
     function loginUser ($enterLogin, $enterPass){
       $this->dbConect = mysqli_connect($this->dbHost, $this->dbUser, $this->dbPswd, $this->dbDatabase) or die("Не могу соединиться с MySQL.");

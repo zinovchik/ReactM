@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './Users.module.css';
 import Preloader from '../Helpers/Preloader/Preloader';
+import {NavLink} from 'react-router-dom';
 
 
 let Users = (props) => {
@@ -23,7 +24,10 @@ let Users = (props) => {
             (user, index) => {
                 return <div key={index} className={s.user}>
                             <div className={s.userImg}>
-                                <img src={user.photo} alt={user.name} />
+                                <NavLink to={'/profile/'+ user.id }>
+                                    <img src={user.photo} alt={user.name} />
+                                </NavLink>
+                                
                             </div>
                             <div className={s.userInfo}>
                                 <p><span className={s.userInfo_link}>{user.name}</span></p>

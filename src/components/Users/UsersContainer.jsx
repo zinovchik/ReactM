@@ -8,7 +8,7 @@ import { follow, unfollow, setUsers, setCurrentPage, toggleIsFetching} from '../
 class UsersApiComponent extends React.Component {
     componentDidMount(){
         this.props.toggleIsFetching(true);
-        axios.get(`http://reactm.max/api/1.0/users.php?userid=7&page=${this.props.pageCurrent}&limit=${this.props.limitItems}`).then((response)=>{
+        axios.get(`http://reactm.max/api/1.0/users.php?type=get-all-users&userid=7&page=${this.props.pageCurrent}&limit=${this.props.limitItems}`).then((response)=>{
             this.props.setUsers(response.data.items, response.data.limit, response.data.count, response.data.page); 
             this.props.toggleIsFetching(false);
         });
@@ -17,7 +17,7 @@ class UsersApiComponent extends React.Component {
     onPageChange = (p) =>{
         this.props.toggleIsFetching(true);
         this.props.setCurrentPage(p);
-        axios.get(`http://reactm.max/api/1.0/users.php?userid=7&page=${p}&limit=${this.props.limitItems}`).then((response)=>{
+        axios.get(`http://reactm.max/api/1.0/users.php?type=get-all-users&userid=7&page=${p}&limit=${this.props.limitItems}`).then((response)=>{
             this.props.setUsers(response.data.items, response.data.limit, response.data.count, response.data.page); 
             this.props.toggleIsFetching(false);
         });
