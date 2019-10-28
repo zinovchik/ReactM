@@ -5,11 +5,13 @@ import UserInfo from './UserInfo/UserInfo';
 import Preloader from '../Helpers/Preloader/Preloader';
 
 const Profiles = (props) => {
-
+if(props.isFetching)  { 
+    return <Preloader />  
+}
     return (
     <div className={s.profile}>
         <UserInfo userInfo={props.userInfo} />
-        { props.isFetching ? <Preloader /> : null }
+        
         <TimelineContainer />
     </div>)
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './UserInfo.module.css';
-import default_bg from './../../../img/covers/9.jpg';
+let default_bg = 'http://reactm.max/img/covers/9.jpg';
 
 const UserInfo = (props) => {
     let userInfo = props.userInfo;
