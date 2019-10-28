@@ -141,6 +141,7 @@ namespace userSpace {
                               'country' => $row['country'],
                              ],
                              'photo' => $row['photo'],
+                             'picture' => $row['picture'],
                              'followed_users' => $row['follow'],
         );
       }

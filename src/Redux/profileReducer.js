@@ -1,12 +1,17 @@
 let ADD_POST = 'ADD_POST';
 let UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
 let SET_USER_INFO = 'SET_USER_INFO';
+let TOGLLE_IS_FETCHING = 'TOGLLE_IS_FETCHING';
 
 let initialState = {
     userInfo : {
-        'name':   'Sarah Cruiz',
-        'picture':'http://mythemestore.com/friend-finder/images/covers/1.jpg',
-        'photo':  'http://mythemestore.com/friend-finder/images/users/user-1.jpg',
+        'id': '',
+        'name': '',
+        'profesion': '',
+        'location': {'city': '', 'country':  ''},
+        'photo': '',
+        'picture': '',
+        'followed_users': '',
     },
     userPosts : [
         {'text': ' If you want your app to work offline and load faster, you can change unregister() to register() below.',
@@ -22,7 +27,8 @@ let initialState = {
         'dislike': '2'
         },
     ],
-    newPostText : ""
+    newPostText : "",
+    isFetching: false,
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -41,12 +47,19 @@ const profileReducer = (state = initialState, action) => {
             }; 
         }
         case SET_USER_INFO: 
+        
             return {
                 ...state,
-                userInfo: [
+                userInfo: {
                     ...action.userInfo
-                ],
+                },
                 
+            };
+
+        case TOGLLE_IS_FETCHING: 
+            return {
+                ...state,
+                isFetching: action.isFetching,
             };
         default: 
             return state; 
@@ -73,6 +86,13 @@ export const setUserInfo = (userInfo) => {
     return { 
         type: SET_USER_INFO,
         userInfo: userInfo,
+    }
+};
+
+export const toggleIsFetching = (isFetching) => {
+    return {
+        type: TOGLLE_IS_FETCHING,
+        isFetching: isFetching,
     }
 };
 
