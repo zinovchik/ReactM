@@ -1,18 +1,17 @@
 import React from 'react';
 import { Route} from "react-router-dom";
 import './App.css';
-import Header from './components/Header/Header';
+import HeaderContainer from './components/Header/HeaderContainer';
 import SidebarContainer from './components/Sidebar/SidebarContainer';
 import ProfilesContainer from './components/Profiles/ProfilesContainer';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from './components/Users/UsersContainer';
 
-
 function App() {
   
   return (
     <div>
-      <Header />
+      <HeaderContainer />
       <div className="container">
         <div className="app-wrapper">          
           <SidebarContainer />

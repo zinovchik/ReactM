@@ -10,3 +10,15 @@
     height:30px;
     width: auto;
   }
+
+  .loginBlock{
+    float: right;
+    width: 200px;
+    text-align: right;
+    line-height: 38px;
+  }
+  .loginBlock a{
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+  }
