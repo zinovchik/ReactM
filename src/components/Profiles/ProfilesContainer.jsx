@@ -1,9 +1,9 @@
 import React from 'react';
 import Profiles from './Profiles';
 import {connect} from 'react-redux';
-import * as axios from 'axios';
 import { setUserInfo, toggleIsFetching } from '../../Redux/profileReducer';
 import {withRouter} from 'react-router-dom';
+import { userAPI } from '../../apiFunctions/api';
 
 class ProfilesApiComponent extends React.Component {
     
@@ -13,8 +13,8 @@ class ProfilesApiComponent extends React.Component {
             userId = 7;
         }
         this.props.toggleIsFetching(true);
-        axios.get(`http://reactm.max/api/1.0/users.php?type=get-user-info&userid=${userId}`).then((response)=>{ 
-            this.props.setUserInfo(response.data.userInfo); 
+        userAPI.getUser(userId).then((data)=>{ 
+            this.props.setUserInfo(data.userInfo); 
             this.props.toggleIsFetching(false);
         });
     };

@@ -1,15 +1,16 @@
 import React from 'react';
-import * as axios from 'axios';
 import Users from './Users';
 import { connect } from 'react-redux';
 import { follow, unfollow, setUsers, setCurrentPage, toggleIsFetching} from '../../Redux/usersReducer';
+import { userAPI } from '../../apiFunctions/api';
 
 
 class UsersApiComponent extends React.Component {
     componentDidMount(){
         this.props.toggleIsFetching(true);
-        axios.get(`http://reactm.max/api/1.0/users.php?type=get-all-users&userid=${this.props.currentUserId}&page=${this.props.pageCurrent}&limit=${this.props.limitItems}`).then((response)=>{
-            this.props.setUsers(response.data.items, response.data.limit, response.data.count, response.data.page); 
+        userAPI.getAllUsers(this.props.currentUserId, this.props.pageCurrent, this.props.limitItems)
+        .then((data)=>{
+            this.props.setUsers(data.items, data.limit, data.count, data.page); 
             this.props.toggleIsFetching(false);
         });
     };
@@ -17,19 +18,19 @@ class UsersApiComponent extends React.Component {
     onPageChange = (p) =>{
         this.props.toggleIsFetching(true);
         this.props.setCurrentPage(p);
-        axios.get(`http://reactm.max/api/1.0/users.php?type=get-all-users&userid=${this.props.currentUserId}&page=${p}&limit=${this.props.limitItems}`).then((response)=>{
-            this.props.setUsers(response.data.items, response.data.limit, response.data.count, response.data.page); 
+        userAPI.getAllUsers(this.props.currentUserId, p, this.props.limitItems).then((data)=>{
+            this.props.setUsers(data.items, data.limit, data.count, data.page); 
             this.props.toggleIsFetching(false);
         });
     }
     follow = (userId, userId2) =>{
-        axios.get(`http://reactm.max/api/1.0/users.php?type=follow-user&userid=${userId}&userid2=${userId2}`).then((response)=>{
+        userAPI.followUser(userId, userId2).then((data)=>{
             this.props.follow(userId, userId2);
         });
     }
 
     unfollow = (userId, userId2) =>{
-        axios.get(`http://reactm.max/api/1.0/users.php?type=unfollow-user&userid=${userId}&userid2=${userId2}`).then((response)=>{
+        userAPI.unfollowUser(userId, userId2).then((data)=>{
             this.props.unfollow(userId, userId2);
         });
     }
