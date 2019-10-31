@@ -67,17 +67,17 @@ const usersReducer = (state = initialState, action) => {
     }
 };
 
-export const follow = (userId) => {
+export const follow = (userId, userId2) => {
     return {
         type: FOLLOW,
-        userId: userId,
+        userId: userId2,
     }
 };
 
-export const unfollow = (userId) => {
+export const unfollow = (userId, userId2) => {
     return {
         type: UNFOLLOW,
-        userId: userId,
+        userId: userId2,
     }
 };
 

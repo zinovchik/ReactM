@@ -2,6 +2,144 @@
 namespace userSpace {
   use configSpace;
   class userClass extends configSpace\configClass {
+    
+    //Получаем список юзеров
+    function getListUsers($userId, $page = 0, $limit = 3) {
+      //DEFAULT
+      $answer = array(
+        'items' => array(),
+        'errors'=> false,
+        'count' => 0,
+        'page' => $page,
+        'limit' => $limit,
+      );
+      $this->dbConect = mysqli_connect($this->dbHost, $this->dbUser, $this->dbPswd, $this->dbDatabase) or die("Не могу соединиться с MySQL.");
+      //CURRENT USER INFO
+      $curentUser = mysqli_query($this->dbConect, "SELECT * FROM `users` WHERE `id` = '" . $userId . "'");
+      if($curentUser === FALSE) { $answer['errors'] = true; } else { 
+        $curentUser = mysqli_fetch_array($curentUser, MYSQLI_ASSOC);
+        $curentUserFollow = explode(',',  $curentUser['follow']);
+      }
+      //COUNT ALL
+      $countUsers = mysqli_query($this->dbConect, "SELECT COUNT(*) as count FROM `users`");
+      if($curentUser === FALSE) { $answer['errors'] = true; } else { 
+        $countUsers = mysqli_fetch_array($countUsers, MYSQLI_ASSOC);
+        $answer['count'] = $countUsers['count'];
+      }
+      //ALL USER INFO  
+      $offset = $page * $limit; 
+      $dataListUsers = mysqli_query($this->dbConect, "SELECT * FROM `users` LIMIT {$offset},{$limit}");
+      $listUsers = array();
+      while ($row = mysqli_fetch_array($dataListUsers, MYSQLI_ASSOC)) {
+        $listUsers[] = array('id' => $row['id'],
+                             'name' => $row['name'],
+                             'profesion' => $row['profesion'],
+                             'location' => [
+                              'city' => $row['city'],
+                              'country' => $row['country'],
+                             ],
+                             'photo' => $row['photo'],
+                             'follow' => in_array($row['id'], $curentUserFollow) ? true : false,
+        );
+      };
+      $answer['items'] = $listUsers;
+      mysqli_close($this->dbConect);
+      return $answer;
+    }
+
+    //Получаем info юзерa
+    function getUserInfo($userId) {
+      //DEFAULT
+      $answer = array(
+        'userInfo' => array(),
+        'errors'=> false,
+      );
+      $this->dbConect = mysqli_connect($this->dbHost, $this->dbUser, $this->dbPswd, $this->dbDatabase) or die("Не могу соединиться с MySQL.");
+      //CURRENT USER INFO
+      $curentUser = mysqli_query($this->dbConect, "SELECT * FROM `users` WHERE `id` = '" . $userId . "'");
+      if($curentUser === FALSE) { 
+        $answer['errors'] = true; 
+      } else { 
+        $row = mysqli_fetch_array($curentUser, MYSQLI_ASSOC);
+        $answer['userInfo'] = array('id' => $row['id'],
+                             'name' => $row['name'],
+                             'profesion' => $row['profesion'],
+                             'location' => [
+                              'city' => $row['city'],
+                              'country' => $row['country'],
+                             ],
+                             'photo' => $row['photo'],
+                             'picture' => $row['picture'],
+                             'followed_users' => $row['follow'],
+        );
+      }
+      mysqli_close($this->dbConect);
+      return $answer;
+    }
+
+    //FOLLOW USER
+    function followUser($userId, $userId2) {
+      //DEFAULT
+      $answer = array(
+        'statusCode' => 0,
+        'errors'=> false,
+      );
+      $this->dbConect = mysqli_connect($this->dbHost, $this->dbUser, $this->dbPswd, $this->dbDatabase) or die("Не могу соединиться с MySQL.");
+      //CURRENT USER INFO
+      $curentUser = mysqli_query($this->dbConect, "SELECT * FROM `users` WHERE `id` = '" . $userId . "'");
+      if($curentUser === FALSE) { 
+        $answer['errors'] = true; 
+      } else { 
+        $row = mysqli_fetch_array($curentUser, MYSQLI_ASSOC);
+        $followed_users_arr = explode(',',$row['follow']);
+        if(in_array($userId2, $followed_users_arr)) {
+          $answer['statusCode'] = 1;
+        } else {
+          $followed_users_arr[] = $userId2;
+          $followed_users_str = implode(',',$followed_users_arr); 
+          $updateUser = mysqli_query($this->dbConect, "UPDATE `users` SET `follow` = '" . $followed_users_str . "' WHERE `id` = '" . $userId . "'");
+        }
+      }
+      mysqli_close($this->dbConect);
+      return $answer;
+    }
+
+    //UNFOLLOW USER
+    function unfollowUser($userId, $userId2) {
+      //DEFAULT
+      $answer = array(
+        'statusCode' => 0,
+        'errors'=> false,
+      );
+      $this->dbConect = mysqli_connect($this->dbHost, $this->dbUser, $this->dbPswd, $this->dbDatabase) or die("Не могу соединиться с MySQL.");
+      //CURRENT USER INFO
+      $curentUser = mysqli_query($this->dbConect, "SELECT * FROM `users` WHERE `id` = '" . $userId . "'");
+      if($curentUser === FALSE) { 
+        $answer['errors'] = true; 
+      } else { 
+        $row = mysqli_fetch_array($curentUser, MYSQLI_ASSOC);
+        $followed_users_arr = explode(',',$row['follow']);
+        if(in_array($userId2, $followed_users_arr)) {
+
+          $followed_users_arr = array_flip($followed_users_arr);
+          unset($followed_users_arr[$userId2]);
+          $followed_users_arr = array_flip($followed_users_arr);
+          $followed_users_str = implode(',',$followed_users_arr); 
+          $updateUser = mysqli_query($this->dbConect, "UPDATE `users` SET `follow` = '" . $followed_users_str . "' WHERE `id` = '" . $userId . "'");
+        } else {
+          $answer['statusCode'] = 1;                 
+        }
+      }
+      mysqli_close($this->dbConect);
+      return $answer;
+    }
+
+
+
+
+
+
+
 
     //функция для добавления юзера в базу
     function addUser($userName, $userPass, $userRole){
@@ -67,88 +205,6 @@ namespace userSpace {
           $answer['isSetUser'] = 1;
         }
       }
-      mysqli_close($this->dbConect);
-      return $answer;
-    }
-
-    //Получаем список юзеров
-    function getListUsers($userId, $page = 0, $limit = 3) {
-      //DEFAULT
-      $answer = array(
-        'items' => array(),
-        'errors'=> false,
-        'count' => 0,
-        'page' => $page,
-        'limit' => $limit,
-      );
-      $this->dbConect = mysqli_connect($this->dbHost, $this->dbUser, $this->dbPswd, $this->dbDatabase) or die("Не могу соединиться с MySQL.");
-      //CURRENT USER INFO
-      $curentUser = mysqli_query($this->dbConect, "SELECT * FROM `users` WHERE `id` = '" . $userId . "'");
-      if($curentUser === FALSE) { $answer['errors'] = true; } else { 
-        $curentUser = mysqli_fetch_array($curentUser, MYSQLI_ASSOC);
-        $curentUserFollow = explode(',',  $curentUser['follow']);
-      }
-      //COUNT ALL
-      $countUsers = mysqli_query($this->dbConect, "SELECT COUNT(*) as count FROM `users`");
-      if($curentUser === FALSE) { $answer['errors'] = true; } else { 
-        $countUsers = mysqli_fetch_array($countUsers, MYSQLI_ASSOC);
-        $answer['count'] = $countUsers['count'];
-      }
-      //ALL USER INFO  
-      $offset = $page * $limit; 
-    $dataListUsers = mysqli_query($this->dbConect, "SELECT * FROM `users` LIMIT {$offset},{$limit}");
-      $listUsers = array();
-      while ($row = mysqli_fetch_array($dataListUsers, MYSQLI_ASSOC)) {
-        $listUsers[] = array('id' => $row['id'],
-                             'name' => $row['name'],
-                             'profesion' => $row['profesion'],
-                             'location' => [
-                              'city' => $row['city'],
-                              'country' => $row['country'],
-                             ],
-                             'photo' => $row['photo'],
-                             'follow' => in_array($row['id'], $curentUserFollow) ? true : false,
-        );
-      };
-      $answer['items'] = $listUsers;
-
-
-      mysqli_close($this->dbConect);
-      return $answer;
-    }
-
-
-    
-    //Получаем info юзерa
-    function getUserInfo($userId) {
-      //DEFAULT
-      $answer = array(
-        'userInfo' => array(),
-        'errors'=> false,
-      );
-      $this->dbConect = mysqli_connect($this->dbHost, $this->dbUser, $this->dbPswd, $this->dbDatabase) or die("Не могу соединиться с MySQL.");
-      //CURRENT USER INFO
-      $curentUser = mysqli_query($this->dbConect, "SELECT * FROM `users` WHERE `id` = '" . $userId . "'");
-      if($curentUser === FALSE) { 
-        $answer['errors'] = true; 
-      } else { 
-        $row = mysqli_fetch_array($curentUser, MYSQLI_ASSOC);
-        $answer['userInfo'] = array('id' => $row['id'],
-                             'name' => $row['name'],
-                             'profesion' => $row['profesion'],
-                             'location' => [
-                              'city' => $row['city'],
-                              'country' => $row['country'],
-                             ],
-                             'photo' => $row['photo'],
-                             'picture' => $row['picture'],
-                             'followed_users' => $row['follow'],
-        );
-      }
-      
-     
-
-
       mysqli_close($this->dbConect);
       return $answer;
     }

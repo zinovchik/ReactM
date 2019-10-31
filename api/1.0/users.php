@@ -11,6 +11,12 @@ switch($_GET['type']){
     case 'get-user-info': 
         echo json_encode($user->getUserInfo($_GET['userid']));
     break;
+    case 'follow-user': 
+        echo json_encode($user->followUser($_GET['userid'], $_GET['userid2']));
+    break;
+    case 'unfollow-user': 
+        echo json_encode($user->unfollowUser($_GET['userid'], $_GET['userid2']));
+    break;
 
     default: 
 }

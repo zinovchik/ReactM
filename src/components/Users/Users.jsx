@@ -5,7 +5,7 @@ import {NavLink} from 'react-router-dom';
 
 
 let Users = (props) => {
-   
+    
     let pagination = () => {
         
         let arr = [];
@@ -36,8 +36,8 @@ let Users = (props) => {
                             </div>
                             <div className={s.userAction}>
                                 { user.follow ? 
-                                    <button className={s.btn} onClick={()=>{props.unfollow(user.id)}}>Unfollow</button> : 
-                                    <button className={s.btn} onClick={()=>{props.follow(user.id)}}>Follow</button>}
+                                    <button className={s.btn} onClick={()=>{props.unfollow(props.currentUserId, user.id)}}>Unfollow</button> : 
+                                    <button className={s.btn} onClick={()=>{props.follow(props.currentUserId, user.id)}}>Follow</button>}
                             </div>
                         </div>
             }

@@ -8,7 +8,7 @@ import { follow, unfollow, setUsers, setCurrentPage, toggleIsFetching} from '../
 class UsersApiComponent extends React.Component {
     componentDidMount(){
         this.props.toggleIsFetching(true);
-        axios.get(`http://reactm.max/api/1.0/users.php?type=get-all-users&userid=7&page=${this.props.pageCurrent}&limit=${this.props.limitItems}`).then((response)=>{
+        axios.get(`http://reactm.max/api/1.0/users.php?type=get-all-users&userid=${this.props.currentUserId}&page=${this.props.pageCurrent}&limit=${this.props.limitItems}`).then((response)=>{
             this.props.setUsers(response.data.items, response.data.limit, response.data.count, response.data.page); 
             this.props.toggleIsFetching(false);
         });
@@ -17,26 +17,40 @@ class UsersApiComponent extends React.Component {
     onPageChange = (p) =>{
         this.props.toggleIsFetching(true);
         this.props.setCurrentPage(p);
-        axios.get(`http://reactm.max/api/1.0/users.php?type=get-all-users&userid=7&page=${p}&limit=${this.props.limitItems}`).then((response)=>{
+        axios.get(`http://reactm.max/api/1.0/users.php?type=get-all-users&userid=${this.props.currentUserId}&page=${p}&limit=${this.props.limitItems}`).then((response)=>{
             this.props.setUsers(response.data.items, response.data.limit, response.data.count, response.data.page); 
             this.props.toggleIsFetching(false);
+        });
+    }
+    follow = (userId, userId2) =>{
+        axios.get(`http://reactm.max/api/1.0/users.php?type=follow-user&userid=${userId}&userid2=${userId2}`).then((response)=>{
+            this.props.follow(userId, userId2);
+        });
+    }
+
+    unfollow = (userId, userId2) =>{
+        axios.get(`http://reactm.max/api/1.0/users.php?type=unfollow-user&userid=${userId}&userid2=${userId2}`).then((response)=>{
+            this.props.unfollow(userId, userId2);
         });
     }
 
     render() {
         return (<Users 
+            currentUserId={this.props.currentUserId} 
             users={this.props.users} 
             pageCount={this.props.pageCount} 
             pageCurrent={this.props.pageCurrent} 
             onPageChange={this.onPageChange}
-            unfollow={this.props.unfollow}
-            follow={this.props.follow}
+            unfollow={this.unfollow}
+            follow={this.follow}
             isFetching={this.props.isFetching}  />);
     }
 }
 
 let mapStateToProps = (state) =>{
+    
     return {
+        currentUserId: state.auth.userId,
         users: state.usersPage.users,
         limitItems: state.usersPage.limitItems,
         pageCount: state.usersPage.pageCount,
