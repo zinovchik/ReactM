@@ -1,7 +1,7 @@
 import React from 'react';
 import Users from './Users';
 import { connect } from 'react-redux';
-import { follow, unfollow, setUsers, setCurrentPage, toggleIsFetching} from '../../Redux/usersReducer';
+import { followingProgress, follow, unfollow, setUsers, setCurrentPage, toggleIsFetching} from '../../Redux/usersReducer';
 import { userAPI } from '../../apiFunctions/api';
 
 
@@ -24,14 +24,18 @@ class UsersApiComponent extends React.Component {
         });
     }
     follow = (userId, userId2) =>{
+        this.props.followingProgress(userId2, true); 
         userAPI.followUser(userId, userId2).then((data)=>{
             this.props.follow(userId, userId2);
+            this.props.followingProgress(userId2, false);
         });
     }
 
     unfollow = (userId, userId2) =>{
+        this.props.followingProgress(userId2, true); 
         userAPI.unfollowUser(userId, userId2).then((data)=>{
             this.props.unfollow(userId, userId2);
+            this.props.followingProgress(userId2, false);
         });
     }
 
@@ -42,6 +46,7 @@ class UsersApiComponent extends React.Component {
             pageCount={this.props.pageCount} 
             pageCurrent={this.props.pageCurrent} 
             onPageChange={this.onPageChange}
+            followProgress={this.props.followProgress} 
             unfollow={this.unfollow}
             follow={this.follow}
             isFetching={this.props.isFetching}  />);
@@ -57,6 +62,7 @@ let mapStateToProps = (state) =>{
         pageCount: state.usersPage.pageCount,
         pageCurrent: state.usersPage.pageCurrent,
         isFetching: state.usersPage.isFetching,
+        followProgress: state.usersPage.followProgress,
     }
 }; 
 /*
@@ -100,6 +106,6 @@ let mapDispatchToProps = (dispatch) =>{
 */
 
 
-const UsersContainer = connect(mapStateToProps, { follow, unfollow, setUsers, setCurrentPage, toggleIsFetching } )(UsersApiComponent);
+const UsersContainer = connect(mapStateToProps, { followingProgress, follow, unfollow, setUsers, setCurrentPage, toggleIsFetching } )(UsersApiComponent);
 
 export default UsersContainer;

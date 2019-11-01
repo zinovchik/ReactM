@@ -3,6 +3,7 @@ let UNFOLLOW = 'UNFOLLOW';
 let SET_USERS = 'SET_USERS';
 let SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 let TOGLLE_IS_FETCHING = 'TOGLLE_IS_FETCHING';
+let FOLLOWING_PROGRESS = 'FOLLOWING_PROGRESS';
 
 let initialState = {
     users: [],
@@ -10,10 +11,28 @@ let initialState = {
     pageCount: 1,
     pageCurrent: 0,
     isFetching: false,
+    followProgress: [],
 };
 
 const usersReducer = (state = initialState, action) => {
     switch(action.type){
+        case FOLLOWING_PROGRESS: 
+            if(action.inProccess) {     
+                return {
+                   ...state,
+                   followProgress: [
+                    ...state.followProgress,
+                    action.userId2,
+                   ]
+                };
+            } else {
+                return {
+                    ...state,
+                    followProgress: state.followProgress.filter( item => item !== action.userId2),
+                 };  
+            }
+            
+
         case FOLLOW: 
             return {
                 ...state,
@@ -64,6 +83,14 @@ const usersReducer = (state = initialState, action) => {
             };
 
         default: return state;
+    }
+};
+
+export const followingProgress = (userId2, inProccess = false) => {
+    return {
+        type: FOLLOWING_PROGRESS,
+        userId2: userId2,
+        inProccess: inProccess,
     }
 };
 

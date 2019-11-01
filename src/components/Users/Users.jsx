@@ -21,7 +21,7 @@ let Users = (props) => {
         <h2>Users Page</h2>
         { props.isFetching ? <Preloader /> : null }
         {props.users.map(
-            (user, index) => {
+            (user, index) => {  
                 return <div key={index} className={s.user}>
                             <div className={s.userImg}>
                                 <NavLink to={'/profile/'+ user.id }>
@@ -36,8 +36,8 @@ let Users = (props) => {
                             </div>
                             <div className={s.userAction}>
                                 { user.follow ? 
-                                    <button className={s.btn} onClick={()=>{props.unfollow(props.currentUserId, user.id)}}>Unfollow</button> : 
-                                    <button className={s.btn} onClick={()=>{props.follow(props.currentUserId, user.id)}}>Follow</button>}
+                                    <button disabled={props.followProgress.some( item => item === user.id)} className={s.btn} onClick={()=>{props.unfollow(props.currentUserId, user.id)}}>Unfollow</button> : 
+                                    <button disabled={props.followProgress.some( item => item === user.id)} className={s.btn} onClick={()=>{props.follow(props.currentUserId, user.id)}}>Follow</button>}
                             </div>
                         </div>
             }
