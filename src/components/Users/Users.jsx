@@ -13,7 +13,7 @@ let Users = (props) => {
             arr.push(i); 
         }
         return arr.map((value)=>{
-            return <span onClick={()=>{props.onPageChange(value)}} key={value} className={props.pageCurrent === value ? s.selected : ''}>{value + 1}</span>;
+            return <span onClick={()=>{props.onPageChange(value)}} key={value} className={+props.pageCurrent === value ? s.selected : ''}>{value + 1}</span>;
         });
     };
     
