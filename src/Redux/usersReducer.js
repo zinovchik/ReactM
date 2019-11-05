@@ -80,6 +80,7 @@ const usersReducer = (state = initialState, action) => {
     }
 };
 
+/** Action Creators */
 export const followingProgress = (userId2, inProccess = false) => {
     return {
         type: FOLLOWING_PROGRESS,
@@ -121,11 +122,10 @@ export const toggleIsFetching = (isFetching) => {
 };
 
 /** Thunk functions */
-
-export const getAllUsersThunkCreator = (currentUserId, pageCurrent, limitItems) => {
+export const getListUsersThunkCreator = (currentUserId, pageCurrent, limitItems) => {
     return (dispatch) => {
         dispatch(toggleIsFetching(true));
-        userAPI.getAllUsers(currentUserId, pageCurrent, limitItems)
+        userAPI.getListUsers(currentUserId, pageCurrent, limitItems)
         .then((data)=>{
             dispatch(setUsers(data.items, data.limit, data.count, data.page)); 
             dispatch(toggleIsFetching(false));

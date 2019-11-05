@@ -1,3 +1,5 @@
+import { userAPI } from "../apiFunctions/api";
+
 let SET_USER_DATA = 'SET_USER_DATA';
 let TOGLLE_IS_FETCHING = 'TOGLLE_IS_FETCHING';
 
@@ -23,6 +25,7 @@ const authReducer = (state = initialState, action) => {
     }
 };
 
+/** Action Creators */
 export const setUserData = (userId, email, login) => {
     return {
         type: SET_USER_DATA,
@@ -37,5 +40,15 @@ export const toggleIsFetching = (isFetching) => {
     }
 };
 
+/** Thunk functions */
+export const authMeThunkCreator = () => {
+    return (dispatch) => {
+        dispatch(toggleIsFetching(true));
+        userAPI.authMe().then((data)=>{
+            dispatch(setUserData(data.data.userId, data.data.email, data.data.login)); 
+            dispatch(toggleIsFetching(false));
+        });
+    }
+};
 
 export default authReducer;

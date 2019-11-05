@@ -6,6 +6,15 @@ const instance = axios.create({
 });
 
 export const userAPI = {
+    
+            
+    authMe () {
+        return instance.get(`users.php?type=auth-me`).then((response)=>{
+            if(!response.data.resultCode) {
+                return response.data; 
+            }
+        });
+    },
 
     getUser (userId = 0) {
         return instance.get(`users.php?type=get-user-info&userid=${userId}`).then((response)=>{
@@ -13,7 +22,7 @@ export const userAPI = {
         });
     },
 
-    getAllUsers (currentUserId = 0, pageCurrent = 0, limitItems = 5) {
+    getListUsers (currentUserId = 0, pageCurrent = 0, limitItems = 5) {
         return instance.get(`users.php?type=get-all-users&userid=${currentUserId}&page=${pageCurrent}&limit=${limitItems}`).then((response)=>{
             return response.data;
         });

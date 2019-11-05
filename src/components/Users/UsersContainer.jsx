@@ -1,16 +1,16 @@
 import React from 'react';
 import Users from './Users';
 import { connect } from 'react-redux';
-import { followThunkCreator, unfollowThunkCreator, getAllUsersThunkCreator} from '../../Redux/usersReducer';
+import { followThunkCreator, unfollowThunkCreator, getListUsersThunkCreator} from '../../Redux/usersReducer';
 
 
 class UsersApiComponent extends React.Component {
     componentDidMount(){
-        this.props.getAllUsersThunkCreator(this.props.currentUserId, this.props.pageCurrent, this.props.limitItems);
+        this.props.getListUsersThunkCreator(this.props.currentUserId, this.props.pageCurrent, this.props.limitItems);
     };
 
     onPageChange = (p) =>{
-        this.props.getAllUsersThunkCreator(this.props.currentUserId, p, this.props.limitItems);
+        this.props.getListUsersThunkCreator(this.props.currentUserId, p, this.props.limitItems);
     }
     
     follow = (userId, userId2) =>{
@@ -48,6 +48,6 @@ let mapStateToProps = (state) =>{
     }
 }; 
 
-const UsersContainer = connect(mapStateToProps, { followThunkCreator, unfollowThunkCreator, getAllUsersThunkCreator } )(UsersApiComponent);
+const UsersContainer = connect(mapStateToProps, { followThunkCreator, unfollowThunkCreator, getListUsersThunkCreator } )(UsersApiComponent);
 
 export default UsersContainer;

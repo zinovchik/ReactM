@@ -1,3 +1,5 @@
+import { userAPI } from '../apiFunctions/api';
+
 let ADD_POST = 'ADD_POST';
 let UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
 let SET_USER_INFO = 'SET_USER_INFO';
@@ -67,7 +69,7 @@ const profileReducer = (state = initialState, action) => {
 }
 
 
-
+/** Actions creators */
 export const addPostActionCreator = () => {
     return {
         type: ADD_POST
@@ -93,6 +95,18 @@ export const toggleIsFetching = (isFetching) => {
     return {
         type: TOGLLE_IS_FETCHING,
         isFetching: isFetching,
+    }
+};
+
+
+/** Thunk functions */
+export const setUserInfoThunkCreator = (userId) => {
+    return (dispatch) => {
+        dispatch(toggleIsFetching(true));
+        userAPI.getUser(userId).then((data)=>{ 
+            dispatch(setUserInfo(data.userInfo)); 
+            dispatch(toggleIsFetching(false));
+        });
     }
 };
 

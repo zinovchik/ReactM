@@ -1,9 +1,9 @@
 import React from 'react';
 import Profiles from './Profiles';
 import {connect} from 'react-redux';
-import { setUserInfo, toggleIsFetching } from '../../Redux/profileReducer';
+import { setUserInfoThunkCreator } from '../../Redux/profileReducer';
 import {withRouter} from 'react-router-dom';
-import { userAPI } from '../../apiFunctions/api';
+
 
 class ProfilesApiComponent extends React.Component {
     
@@ -12,11 +12,7 @@ class ProfilesApiComponent extends React.Component {
         if(!userId) {
             userId = 7;
         }
-        this.props.toggleIsFetching(true);
-        userAPI.getUser(userId).then((data)=>{ 
-            this.props.setUserInfo(data.userInfo); 
-            this.props.toggleIsFetching(false);
-        });
+        this.props.setUserInfoThunkCreator(userId);
     };
 
     render (){
@@ -39,6 +35,6 @@ let mapStateToProps = (state) => {
 //     }
 // } 
 
-const ProfilesContainer = connect(mapStateToProps, {setUserInfo, toggleIsFetching})(withRouter( ProfilesApiComponent));
+const ProfilesContainer = connect(mapStateToProps, {setUserInfoThunkCreator})(withRouter( ProfilesApiComponent));
 
 export default ProfilesContainer;

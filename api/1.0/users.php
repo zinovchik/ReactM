@@ -5,6 +5,25 @@ require_once('class/userSpace.php');
 $user = new \userSpace\userClass();
 
 switch($_GET['type']){
+    case 'auth-me': 
+        $error = [
+            'data'=> [],
+            'messages'=> ['You are not autorized'],
+            'resultCode'=> 1
+        ];
+        
+        $success = [
+            'data'=> [
+                'userId'=> 5,
+                'login'=> 'Olivia Steward',
+                'email'=> 'vasia@gmail.com'
+            ],
+            'messages'=> [],
+            'resultCode'=> 0
+        ];
+        
+        echo json_encode($success);
+    break;
     case 'get-all-users': 
         echo json_encode($user->getListUsers($_GET['userid'], $_GET['page'], $_GET['limit']));
     break;
