@@ -2,7 +2,7 @@ import React from 'react';
 import Profiles from './Profiles';
 import {connect} from 'react-redux';
 import { setUserInfoThunkCreator } from '../../Redux/profileReducer';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Redirect} from 'react-router-dom';
 
 
 class ProfilesApiComponent extends React.Component {
@@ -15,7 +15,12 @@ class ProfilesApiComponent extends React.Component {
         this.props.setUserInfoThunkCreator(userId);
     };
 
+    
+
     render (){
+        if(this.props.isAuth === false ){
+            return <Redirect to="/login" />
+        }
         return <Profiles {...this.props} />
     }
     
@@ -25,6 +30,7 @@ let mapStateToProps = (state) => {
     return {
         userInfo: state.profilePage.userInfo,
         isFetching: state.profilePage.isFetching, 
+        isAuth: state.auth.isAuth,
     }
 }
 

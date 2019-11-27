@@ -10,6 +10,7 @@ import UsersContainer from './components/Users/UsersContainer';
 import { connect } from 'react-redux';
 import { authMeThunkCreator } from './Redux/authReducer';
 import Preloader from './components/Helpers/Preloader/Preloader';
+import Login from './components/Login/Login';
 
 class AppApiContainer extends React.Component {
   componentDidMount(){
@@ -28,7 +29,8 @@ class AppApiContainer extends React.Component {
             <div className="content">
               <Route path="/profile/:userId?" render={ () => <ProfilesContainer /> } />
               <Route path="/dialogs" render={ () => <DialogsContainer />} />
-              <Route path="/users" render={ () => <UsersContainer />} />                 
+              <Route path="/users" render={ () => <UsersContainer />} />     
+              <Route path="/login" render={ () => <Login />} />            
             </div>       
           </div>
         </div>
