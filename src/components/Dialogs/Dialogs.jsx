@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './Dialogs.module.css';
-import {NavLink, Redirect} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 
 
@@ -32,7 +32,6 @@ const MessagesListItem = (props)=>{
 }
 
 const Dialogs = (props) => {
-    if(props.isAuth === false) {return <Redirect to="/login" /> }
 
     let dialogsData = props.dialogsPage.dialogsData;
     let messageData = props.dialogsPage.messageData;
